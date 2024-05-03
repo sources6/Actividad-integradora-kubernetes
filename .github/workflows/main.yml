@@ -1,0 +1,45 @@
+name: Alertas y Notificaciones
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  alertas_notificaciones:
+    name: Alertas y Notificaciones
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Verificar cambios
+      run: echo "Se ha realizado un nuevo push a la rama main. Comprobando cambios..."
+
+    - name: Notificar cambios
+      uses: actions/github-script@v5
+      with:
+        github-token: ${{ secrets.KB_TOKEN }}
+        script: |
+          const issue = await github.issues.create({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            title: 'Nuevos cambios en la rama main',
+            body: 'Se ha realizado un nuevo push a la rama main. Revisa los cambios.',
+          });
+          console.log('Se ha creado una nueva notificación:', issue.data.html_url);
+
+    - name: Ejecutar pruebas
+      run: echo "Ejecutando pruebas..."
+
+    - name: Notificar errores
+      if: failure()
+      uses: actions/github-script@v5
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const issue = await github.issues.create({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            title: 'Error en la construcción',
+            body: 'Se ha producido un error durante la construcción del proyecto. Por favor, revisa los detalles y soluciona el problema lo antes posible.',
+          });
+          console.log('Se ha creado una nueva notificación de error:', issue.data.html_url);
