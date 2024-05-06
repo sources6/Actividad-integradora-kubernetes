@@ -1,0 +1,1351 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: tamariareweb-test
+  namespace: default
+  uid: aa1f3b42-0da7-4547-9f81-28b40f5e904d
+  resourceVersion: '25404'
+  generation: 2
+  creationTimestamp: '2024-05-05T22:57:12Z'
+  managedFields:
+    - manager: Mozilla
+      operation: Update
+      apiVersion: apps/v1
+      time: '2024-05-05T22:57:12Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:spec:
+          f:progressDeadlineSeconds: {}
+          f:replicas: {}
+          f:revisionHistoryLimit: {}
+          f:selector: {}
+          f:strategy:
+            f:rollingUpdate:
+              .: {}
+              f:maxSurge: {}
+              f:maxUnavailable: {}
+            f:type: {}
+          f:template:
+            f:metadata:
+              f:labels:
+                .: {}
+                f:app: {}
+            f:spec:
+              f:containers:
+                k:{"name":"nginx-container"}:
+                  .: {}
+                  f:image: {}
+                  f:imagePullPolicy: {}
+                  f:name: {}
+                  f:ports:
+                    .: {}
+                    k:{"containerPort":80,"protocol":"TCP"}:
+                      .: {}
+                      f:containerPort: {}
+                      f:protocol: {}
+                  f:resources: {}
+                  f:terminationMessagePath: {}
+                  f:terminationMessagePolicy: {}
+                  f:volumeMounts:
+                    .: {}
+                    k:{"mountPath":"/usr/share/nginx/html"}:
+                      .: {}
+                      f:mountPath: {}
+                      f:name: {}
+              f:dnsPolicy: {}
+              f:restartPolicy: {}
+              f:schedulerName: {}
+              f:securityContext: {}
+              f:terminationGracePeriodSeconds: {}
+              f:volumes:
+                .: {}
+                k:{"name":"tamariarte-volume"}:
+                  .: {}
+                  f:emptyDir: {}
+                  f:name: {}
+    - manager: kube-controller-manager
+      operation: Update
+      apiVersion: apps/v1
+      time: '2024-05-05T23:22:30Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:annotations:
+            .: {}
+            f:deployment.kubernetes.io/revision: {}
+        f:status:
+          f:availableReplicas: {}
+          f:conditions:
+            .: {}
+            k:{"type":"Available"}:
+              .: {}
+              f:lastTransitionTime: {}
+              f:lastUpdateTime: {}
+              f:message: {}
+              f:reason: {}
+              f:status: {}
+              f:type: {}
+            k:{"type":"Progressing"}:
+              .: {}
+              f:lastTransitionTime: {}
+              f:lastUpdateTime: {}
+              f:message: {}
+              f:reason: {}
+              f:status: {}
+              f:type: {}
+          f:observedGeneration: {}
+          f:readyReplicas: {}
+          f:replicas: {}
+          f:updatedReplicas: {}
+      subresource: status
+    - manager: kubectl-client-side-apply
+      operation: Update
+      apiVersion: apps/v1
+      time: '2024-05-05T23:22:30Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:annotations:
+            f:kubectl.kubernetes.io/last-applied-configuration: {}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tamariareweb-test
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: tamariareweb-test
+    spec:
+      volumes:
+        - name: tamariareweb-test-volume
+          emptyDir: {}
+      containers:
+        - name: nginx-container
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          resources: {}
+          volumeMounts:
+            - name: tamariareweb-test-volume
+              mountPath: /usr/share/nginx/html
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
+status:
+  observedGeneration: 2
+  replicas: 1
+  updatedReplicas: 1
+  readyReplicas: 1
+  availableReplicas: 1
+  conditions:
+    - type: Available
+      status: 'True'
+      lastUpdateTime: '2024-05-05T22:57:15Z'
+      lastTransitionTime: '2024-05-05T22:57:15Z'
+      reason: MinimumReplicasAvailable
+      message: Deployment has minimum availability.
+    - type: Progressing
+      status: 'True'
+      lastUpdateTime: '2024-05-05T22:57:15Z'
+      lastTransitionTime: '2024-05-05T22:57:12Z'
+      reason: NewReplicaSetAvailable
+      message: ReplicaSet "tamariareweb-test-97f4b9d46" has successfully progressed.
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: tamariareweb-test-config
+  namespace: default
+  uid: 0d99ded2-d7e5-4d15-bab1-01e286395443
+  resourceVersion: '19445'
+  creationTimestamp: '2024-05-05T22:56:20Z'
+  managedFields:
+    - manager: Mozilla
+      operation: Update
+      apiVersion: v1
+      time: '2024-05-05T22:56:20Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:data:
+          .: {}
+          f:contactar_estilo.css: {}
+          f:contacto.php: {}
+          f:cuenta.css: {}
+          f:cuenta.html: {}
+          f:evidencia.html: {}
+          f:prueba.css: {}
+data:
+  contacto.php: |
+    <?php	
+      if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+        $dbhost = "localhost";
+        $dbname = "evidencia";
+        $dbuser = "root";
+        $dbpass = "";
+
+        $conn = mysqli_connect($dbhost, $dbuser, $dbpass);
+        // Verificar la conexión
+        if (!$conn) {
+          die('Error al conectarse a la base de datos: ' . mysqli_connect_error());
+        }
+        
+        // Seleccionar la base de datos
+        mysqli_select_db($conn, $dbname);
+        
+        $nombre = $_POST["nombre"];
+        $email = $_POST["email"];
+        $mensaje = $_POST["mensaje"];
+
+        $destinatario = "edsonolafp@gmail.com";
+        $asunto = "Mensaje enviado desde el sitio web";
+
+        $contenido = "Nombre: " . $nombre . "\nEmail: " . $email . "\nMensaje: " . $mensaje;
+
+        mail($destinatario, $asunto, $contenido);
+
+        $sql = "INSERT INTO usuarios (nombre, email, mensaje) VALUES ('$nombre', '$email', '$mensaje')";
+            if (mysqli_query($conn, $sql)) {
+              header("Location: confirmacion.html");
+            } else {
+              echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+            }
+
+        header("Location: confirmacion.html");
+      } else {
+        header("Location: contacto.php");
+      }
+    ?>
+  cuenta.html: |
+    <!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Crear Cuenta</title>
+        <!-- CSS -->
+        <link rel="stylesheet" href="cuenta.css" />
+        <!-- Boxicons CSS -->
+        <link
+          href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css"
+          rel="stylesheet"
+        />
+      </head>
+      <body>
+        <div class="container">
+          <div class="title">
+            Crear Cuenta
+          </div>
+          <form action="test.php" method="POST">
+            <div class="field email-field">
+              <div class="input-field">
+                <input name ="email" autocomplete="off" type="email" placeholder="Ingresa tu correo institucional*" class="email" autofocus required/>
+              </div>
+              <span class="error email-error">
+                <i class="bx bx-error-circle error-icon"></i>
+                <p class="error-text">Por favor ingresa un correo válido</p>
+              </span>
+            </div>
+            <div class="field create-password">
+              <div class="input-field">
+                <input name = "password" type="password" autocomplete="off" placeholder="Crea una contraseña*" class="password" required/>
+                <i class="bx bx-hide show-hide"></i>
+              </div>
+              <span class="error password-error">
+                <i class="bx bx-error-circle error-icon"></i>
+                <p class="error-text">
+                  Ingrese al menos 8 caracteres con número,
+                  símbolo, letra minúscula y mayúscula.
+                </p>
+              </span>
+            </div>
+            <div class="field confirm-password">
+              <div class="input-field">
+                <input name = "cpassword" type="password" autocomplete="off" placeholder="Confirma tu contraseña*" class="cPassword" required/>
+                <i class="bx bx-hide show-hide"></i>
+              </div>
+              <span class="error cPassword-error">
+                <i class="bx bx-error-circle error-icon"></i>
+                <p class="error-text">Las contraseñas no coinciden</p>
+              </span>
+            </div>
+              <div class="input-field button">
+                <input name="crear" type="submit" value="Crea tu cuenta YA!" />
+              </div>
+            </form>
+            <button id="volver-btn"> Volver</button>
+            <script>
+              document.getElementById("volver-btn").onclick = function () {
+                location.href = "evidencia.html";
+              };
+            </script>
+          <!-- JavaScript -->
+          
+        <!-- <script src="script.js"></script> -->
+        <script>
+          const form = document.querySelector("form"),
+          emailField = form.querySelector(".email-field"),
+          emailInput = emailField.querySelector(".email"),
+          passField = form.querySelector(".create-password"),
+          passInput = passField.querySelector(".password"),
+          cPassField = form.querySelector(".confirm-password"),
+          cPassInput = cPassField.querySelector(".cPassword");
+          // Email Validtion
+          function checkEmail() {
+            const emaiPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+            if (!emailInput.value.match(emaiPattern)) {
+              return emailField.classList.add("invalid"); //adding invalid class if email value do not mathced with email pattern
+            }
+            emailField.classList.remove("invalid"); //removing invalid class if email value matched with emaiPattern
+          }
+          // Hide and show password
+          const eyeIcons = document.querySelectorAll(".show-hide");
+          eyeIcons.forEach((eyeIcon) => {
+            eyeIcon.addEventListener("click", () => {
+              const pInput = eyeIcon.parentElement.querySelector("input"); //getting parent element of eye icon and selecting the password input
+              if (pInput.type === "password") {
+                eyeIcon.classList.replace("bx-hide", "bx-show");
+                return (pInput.type = "text");
+              }
+              eyeIcon.classList.replace("bx-show", "bx-hide");
+              pInput.type = "password";
+            });
+          });
+          // Password Validation
+          function createPass() {
+            const passPattern =
+              /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            if (!passInput.value.match(passPattern)) {
+              return passField.classList.add("invalid"); //adding invalid class if password input value do not match with passPattern
+            }
+            passField.classList.remove("invalid"); //removing invalid class if password input value matched with passPattern
+          }
+          // Confirm Password Validtion
+          function confirmPass() {
+            if (passInput.value !== cPassInput.value || cPassInput.value === "") {
+              return cPassField.classList.add("invalid");
+            }
+            cPassField.classList.remove("invalid");
+          }
+          // Calling Funtion on Form Sumbit
+          /* form.addEventListener("submit", (e) => {
+            e.preventDefault(); //preventing form submitting
+            checkEmail();
+            createPass();
+            confirmPass();
+            //calling function on key up
+            emailInput.addEventListener("keyup", checkEmail);
+            passInput.addEventListener("keyup", createPass);
+            cPassInput.addEventListener("keyup", confirmPass);
+            if (
+              !emailField.classList.contains("invalid") &&
+              !passField.classList.contains("invalid") &&
+              !cPassField.classList.contains("invalid")
+            ) {
+              location.href = form.getAttribute("action");
+            }
+          }); */
+        </script>
+      </body>
+    </html>
+  evidencia.html: |
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <title>Tamariarte</title>
+        <link rel="stylesheet" href="prueba.css">
+    </head>
+    <body>
+        <header>
+            <div class="container">
+                <p class="logo">Tamariarte</p>
+                <nav>
+                    <a href="#hero">Inicio</a>
+                    <a href="#nuevos-productos">Tienda</a>
+                    <a href="#nosotros">Nosotros</a>
+                    <a href="contacto.php">Contacto</a>
+                    <a href="cuenta.html">Mi cuenta</a>
+                </nav>
+            </div>
+        </header> 
+        <section id="hero">
+            <h1>Manos Mexicanas</h1>
+            <button><a href="#nuevos-productos">Ve nuestros productos</a></button>
+        </section>
+        <section id="nuevos-productos">
+            <div class="container">
+                <h2><span class="color-acento">Nuevos</span> Productos</h2>
+                <div class="scroller" data-speed="slow">
+                    <div class="scroller__inner" >
+                        <div class="carta">
+                            <h3>Manzana con esfera</h3>
+                            <p>MXN100</p>
+                            <button>Anadir al carrito</button>
+                        </div>
+                        <div class="carta">
+                            <h3>Tiritas Extreme Enchiladas</h3>
+                            <p>MXN150-MXN400</p>
+                            <button>Anadir al carrito</button>
+                        </div>
+                        <div class="carta">
+                            <h3>Oblea impresa de 4cm</h3>
+                            <p>MXN20</p>
+                            <button>Anadir al carrito</button>
+                        </div>
+                        <div class="carta">
+                            <h3>Corazon de 7 cm</h3>
+                            <p>MXN35</p>
+                            <button>Anadir al carrito</button>
+                        </div>
+                        <div class="carta">
+                            <h3>Oblea rellena de Tamarindo</h3>
+                            <p>MXN140</p>
+                            <button>Anadir al carrito</button>
+                        </div>
+                        <div class="carta">
+                            <h3>Cruz con obleas sin rellenar</h3>
+                            <p>MXN 105</p>
+                            <button>Anadir al carrito</button>
+                        </div>
+                        <div class="carta">
+                            <h3>Salsa chamoy 250ml...</h3>
+                            <p>MXN1,080</p>
+                            <button>Anadir al carrito</button>
+                        </div>
+                        <div class="carta">
+                            <h3>Salsa + cascanueces</h3>
+                            <p>MXN270</p>
+                            <button>Anadir al carrito</button>
+                        </div>
+                        <div class="carta">
+                            <h3>Esfera extra grande rellena de producto gourmet</h3>
+                            <p>MXN300</p>
+                            <button>Anadir al carrito</button>
+                        </div>
+                        <div class="carta">
+                            <h3>Mango deshidratado enchilado + fruta...</h3>
+                            <p>MXN1,950</p>
+                            <button>Anadir al carrito</button>
+                        </div>
+                        <div class="carta">
+                            <h3>Cruz de acetato con obleas sin rellenar</h3>
+                            <p>MXN105</p>
+                            <button>Anadir al carrito</button>
+                        </div>
+                        <div class="carta">
+                            <h3>Salsa de Petroleo + Salsa de Tamarindo...</h3>
+                            <p>MXN1,250</p>
+                            <button>Anadir al carrito</button>
+                        </div>
+                    </div>    
+                </div>
+            </div>
+        </section>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+        const scrollers = document.querySelectorAll(".scroller");
+
+        if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+            scrollers.forEach((scroller) => {
+                scroller.setAttribute("data-animated", true);
+
+                const scrollerInner = scroller.querySelector(".scroller__inner");
+
+                // Clonar elementos, incluyendo las imágenes y elementos hijos
+                Array.from(scrollerInner.children).forEach((item) => {
+                    const duplicatedItem = item.cloneNode(true);
+                    duplicatedItem.setAttribute("aria-hidden", true);
+
+                    // Clonar imágenes si las hay
+                    const originalImage = item.querySelector("img");
+                    if (originalImage) {
+                        const clonedImage = originalImage.cloneNode(true);
+                        duplicatedItem.appendChild(clonedImage);
+                    }
+
+                    // Clonar elementos hijos
+                    const originalChildren = item.children;
+                    Array.from(originalChildren).forEach((child) => {
+                        const clonedChild = child.cloneNode(true);
+                        duplicatedItem.appendChild(clonedChild);
+                    });
+
+                    scrollerInner.appendChild(duplicatedItem);
+                });
+            });
+        }
+    });
+        </script>
+        <section id="nosotros">
+            <div class="container">
+              <div class="img-container"></div>
+              <div class="texto">
+                  <h2><span class="color-acento">¿Quienes Somos?</span></h2>
+                  <p><span class="color-acento1">Iniciamos en Febrero 2017 con el sueno de crear Tamarindos de calidad hechos con manos mexicanas, que no se pudiera encontrar en las tiendas de conveniencia, ademas de tener claro que somos bendecidos para bendecir.
+                      Los recuerditos nos han llevado a la mesa de muchas familias y eso nos llena de mucho agradecimiento, nuestro reconocimiento? la recomendacion de boca en boca.
+                      Con las mesas de postres nos llena de felicidad que nos inviten a ser parte de sus eventos ano con ano, porque nos invitan una vez y nos quedamos como proveedor oficial.
+                      Somos una familia Regia con un espiritu de servicio dotado por Dios, y siempre dispuestos a darlo todo!</span></p>  
+                </div>
+            </div>
+        </section>
+        <section id="vision">
+            <div class="container">
+                <div class="texto1">
+                    <h2><span class="color-acento">Vision</span></h2>
+                    <h3>En TAMARIARTE ® queremos llegar y ser tradicion en todos los hogares del mundo ofreciendote productos unicos. Permitenos acompanar tu mesa en cada reunion familiar, a tus despedidas, baby shower, bautizos, reuniones de amigo; ofreciendote promociones, puntualidad, el mejor servicio y lo que nos distingue: la alta calidad con nuestros productos y salsas artesanales Gourmet.
+                        Todos los que hacemos TAMARIARTE ® nos preparamos cada dia para conocer mejor a nuestros clientes y asi ofrecerte una experiencia Gourmet, atendiendo sus necesidades, personalizando cada pedido, fomentando la mejora continua, expandiendo sin fronteras nuestro mercado; llevandote nuevos productos con la pasion artesanal de las manos mexicanas que los producen especialmente para ti.</h3>
+                </div>
+                <div class="img-container1"></div>
+            </div>
+        </section>
+        <section id="masvendidos">
+            <div class="container">
+                <h2>Mas vendidos</h2>
+                <div class="vendidos">
+                    <div class="carta">
+                        <h3>Bolsa de cuadritos de obleas rellenas</h3>
+                        <p>MXN170-MXN330</p>
+                        <button>Anadir al carrito</button>
+                    </div>
+                    <div class="carta">
+                        <h3>Oblea rellena de tamarindo</h3>
+                        <p>MXN35</p>
+                        <button>Anadir al carrito</button>
+                    </div>
+                    <div class="carta">
+                        <h3>Kiss de rollo de guayaba</h3>
+                        <p>MXN120</p>
+                        <button>Anadir al carrito</button>
+                    </div>
+                    <div class="carta">
+                        <h3>Salsa chamoy 250ml</h3>
+                        <p>MXN120</p>
+                        <button>Anadir al carrito</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d57528.56920574112!2d-100.35739802040092!3d25.68668574014198!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e6!4m5!1s0x86629531b437f8f5%3A0xa3d3d3ca6ac89894!2sMonterrey%2C%20Nuevo%20Le%C3%B3n!3m2!1d25.686614199999998!2d-100.3161126!4m5!1s0x86629531b437f8f5%3A0xa3d3d3ca6ac89894!2sMonterrey%2C%20Nuevo%20Le%C3%B3n!3m2!1d25.686614199999998!2d-100.3161126!5e0!3m2!1ses!2smx!4v1698433383732!5m2!1ses!2smx" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <footer>
+            <div class="container">
+                <p>&copy; Tamariarte 2023</p>
+            </div>
+        </footer>
+    </body>
+    </html>
+  prueba.css: |
+    *{
+    box-sizing: border-box;
+    }
+
+    html{
+        scroll-behavior: smooth;
+    }
+
+    body {
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+      }
+
+    h1{ font-size: 3.5em;}
+    h2 {font-size: 2.7em;}
+    p{font-size: 1.25em;}
+
+    button{
+        font-size: 1.5;
+        font-weight: bold;
+        padding: 10px 20px;
+        border-radius: 10px;
+        border: 1px solid rgba(0,0,0,0.5);
+        box-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+        color: white;
+        background-color: brown;
+    }
+    button:hover{
+        background-color: rgb(77, 18, 18);
+    }
+
+    .container{
+        max-width: 1400px;
+        margin: auto;
+    }
+
+    .color-acento{ color: brown} 
+    .color-acento1{ color: #454545} 
+
+    header{
+        background-color: rbg(245,245,245);
+    }
+
+    header .logo{
+        margin: 0;
+        padding: 25px 30px;
+        font-weight: bold;
+        color:brown;
+        font-size: 1.35em;
+    }
+
+    header .container{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    header nav{
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        padding-bottom: 25px;
+    }
+
+    header a{
+        padding: 5px 12px;
+        text-decoration: none;
+        font-weight: bold;
+        color:black;
+    }
+
+    header a:hover{
+        color:rgb(109, 26, 26);
+    }
+
+    #hero{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        flex-direction: column;
+        height: 90vh;
+        color: white;
+        background-image: linear-gradient(
+            0deg,
+            rgba(0,0,0,0.5),
+            rgba(0,0,0,0.5)
+        )
+        ,url("media/hero.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;
+    }
+
+    #hero h1{
+        color: white;
+        font-size: 5em;
+    }
+
+    #hero button a {
+        color: white;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    #nuevos-productos{
+        background-color: rgb(224, 94, 94);
+        color: white;
+        text-align: center;
+    }
+
+    #nuevos-productos .container{
+        padding: 150px 12px;
+    }
+
+    #nuevos-productos h2{
+        margin-top: 0;
+        font-size: 3.2em;
+    }
+
+    #nuevos-productos p{
+        display: none;
+    }
+
+    #nuevos-productos .container .scroller .scroller__inner .carta{
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;
+        padding: 50px;
+        margin: 20px;
+        border-radius: 15px;
+        max-height: 400px;
+        overflow: hidden;
+        min-width: 300px;
+    }
+
+    #nuevos-productos .container .scroller .scroller__inner .carta:first-child{
+        background-image: linear-gradient(
+            0deg,
+            rgba(0,0,0,0.5),
+            rgba(0,0,0,0.5)
+        )
+        ,url("media/1.jpeg");
+    }
+
+    #nuevos-productos .container .scroller .scroller__inner .carta:nth-child(2){
+        background-image: linear-gradient(
+            0deg,
+            rgba(0,0,0,0.5),
+            rgba(0,0,0,0.5)
+        )
+        ,url("media/2.jpeg");
+    }
+
+    #nuevos-productos .container .scroller .scroller__inner .carta:nth-child(3){
+        background-image: linear-gradient(
+            0deg,
+            rgba(0,0,0,0.5),
+            rgba(0,0,0,0.5)
+        )
+        ,url("media/3.jpeg");
+    }
+
+    #nuevos-productos .container .scroller .scroller__inner .carta:nth-child(4){
+        background-image: linear-gradient(
+            0deg,
+            rgba(0,0,0,0.5),
+            rgba(0,0,0,0.5)
+        )
+        ,url("media/4.jpeg");
+    }
+
+    #nuevos-productos .container .scroller .scroller__inner .carta:nth-child(5){
+        background-image: linear-gradient(
+            0deg,
+            rgba(0,0,0,0.5),
+            rgba(0,0,0,0.5)
+        )
+        ,url("media/5.jpeg");
+    }
+
+    #nuevos-productos .container .scroller .scroller__inner .carta:nth-child(6){
+        background-image: linear-gradient(
+            0deg,
+            rgba(0,0,0,0.5),
+            rgba(0,0,0,0.5)
+        )
+        ,url("media/6.jpeg");
+    }
+
+    #nuevos-productos .container .scroller .scroller__inner .carta:nth-child(7){
+        background-image: linear-gradient(
+            0deg,
+            rgba(0,0,0,0.5),
+            rgba(0,0,0,0.5)
+        )
+        ,url("media/7.jpeg");
+    }
+
+    #nuevos-productos .container .scroller .scroller__inner .carta:nth-child(8){
+        background-image: linear-gradient(
+            0deg,
+            rgba(0,0,0,0.5),
+            rgba(0,0,0,0.5)
+        )
+        ,url("media/8.jpeg");
+    }
+
+    #nuevos-productos .container .scroller .scroller__inner .carta:nth-child(9){
+        background-image: linear-gradient(
+            0deg,
+            rgba(0,0,0,0.5),
+            rgba(0,0,0,0.5)
+        )
+        ,url("media/9.jpg");
+    }
+
+    #nuevos-productos .container .scroller .scroller__inner .carta:nth-child(10){
+        background-image: linear-gradient(
+            0deg,
+            rgba(0,0,0,0.5),
+            rgba(0,0,0,0.5)
+        )
+        ,url("media/10.jpeg");
+    }
+
+    #nuevos-productos .container .scroller .scroller__inner .carta:nth-child(11){
+        background-image: linear-gradient(
+            0deg,
+            rgba(0,0,0,0.5),
+            rgba(0,0,0,0.5)
+        )
+        ,url("media/11.jpeg");
+    }
+
+    #nuevos-productos .container .scroller .scroller__inner .carta:nth-child(12){
+        background-image: linear-gradient(
+            0deg,
+            rgba(0,0,0,0.5),
+            rgba(0,0,0,0.5)
+        )
+        ,url("media/12.jpeg");
+    }
+
+    #nuevos-productos .scroller {
+        max-width: auto;
+    }
+
+    #nuevos-productos .scroller__inner {
+        max-width: auto; /* Especifica un ancho máximo */
+        padding-block: 1rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin: 0;
+        list-style: none;
+        justify-content: flex-end;
+    }
+
+
+    #nuevos-productos .scroller[data-animated="true"]{
+        overflow: hidden;
+        mask: linear-gradient(90deg, transparent,
+        #fff 20%, #fff 88%, transparent);
+    }
+
+    #nuevos-productos .scroller[data-animated="true"] .scroller__inner{
+        width: max-content;
+        flex-wrap: nowrap;
+        animation: scroll var(--_animation-duration, 40s)
+            var(--_animation-direction, forwards) linear infinite;
+    }
+
+    #nuevos-productos .scroller[data-speed="slow"]{
+        --_animation-duration: 100s;
+    }
+
+    @keyframes scroll {
+        to{
+            transform: translate(calc(-50% - 0.5rem));
+        }
+    }
+
+    #nosotros .container{
+        text-align: center;
+        padding: 200px 12px;
+    }
+
+    #masvendidos{
+        background-color: rgb(184, 96, 96);
+        color: white;
+        text-align: center;
+    }
+
+    #masvendidos .container{
+        padding: 150px 12px;
+    }
+
+    #masvendidos h2{
+        margin-top: 0;
+    }
+
+    #masvendidos p{
+        display: none;
+    }
+
+    #masvendidos .carta{
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;
+        padding: 50px;
+        margin: 20px;
+        border-radius: 15px;
+    }
+
+    #masvendidos .carta:first-child{
+        background-image: linear-gradient(
+            0deg,
+            rgba(0,0,0,0.5),
+            rgba(0,0,0,0.5)
+        )
+        ,url("media/bolsa.jpg");
+    }
+
+    #masvendidos .carta:nth-child(2){
+        background-image: linear-gradient(
+            0deg,
+            rgba(0,0,0,0.5),
+            rgba(0,0,0,0.5)
+        )
+        ,url("media/bolsa.jpg");
+    }
+
+    #masvendidos .carta:nth-child(3){
+        background-image: linear-gradient(
+            0deg,
+            rgba(0,0,0,0.5),
+            rgba(0,0,0,0.5)
+        )
+        ,url("media/oblea.jpg");
+    }
+
+    #masvendidos .carta:nth-child(4){
+        background-image: linear-gradient(
+            0deg,
+            rgba(0,0,0,0.5),
+            rgba(0,0,0,0.5)
+        )
+        ,url("media/kiss.jpg");
+    }
+    #masvendidos .carta:nth-child(5){
+        background-image: linear-gradient(
+            0deg,
+            rgba(0,0,0,0.5),
+            rgba(0,0,0,0.5)
+        )
+        ,url("media/chamoy.jpg");
+    }
+
+    #nosotros .container{
+        text-align: center;
+        font-weight: bold;
+        padding: 200px 12px;
+    }
+
+    footer{
+        background-color: rgb(230,230,230);
+    }
+    
+    footer p{
+        margin: 0;
+        padding: 12px;
+        color: rgb(100,100,100);
+    }
+
+    footer .container{
+        height: 150px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+    }
+
+    iframe {
+        border: 1px solid black;
+        width: 100%; /* takes precedence over the width set with the HTML width attribute */
+      }
+
+    @media (min-width: 720px){
+      
+        header .container{
+            flex-direction:row;
+            justify-content: space-between;
+        }
+
+        header nav{ 
+            flex-direction: row;
+            padding-bottom: 0;
+            padding-right: 5px;
+        }
+
+        #nosotros{
+            background-color: white;
+        }
+
+        #nosotros .container{
+            display: flex;
+            justify-content: space-evenly;
+        }
+        
+        #nosotros .texto{
+            width: 50%;
+            max-width: 600px;
+            text-align: initial;
+            padding-left:30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        #nosotros h2{
+            margin-top: 0px;
+        }
+
+        #nosotros .img-container{
+            background-image: url("media/nosotros.jpg");
+            background-size: contain;
+            background-position: center center;
+            height: 500px;
+            width: 400px;
+            border-radius: 15px;
+        }
+
+        #vision {
+            padding-top: 100px;
+            padding-bottom: 150px;
+            background-color: #f7d1d1;
+        }
+
+        #vision .container{
+            display: flex;
+            justify-content: space-evenly;
+        }
+        
+        #vision .texto1{
+            width: 50%;
+            max-width: 600px;
+
+            padding-left:30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+        }
+
+        #vision h2{
+            margin-top: 0px;
+        }
+
+
+        #nuevos-productos .productos{
+            display: flex;
+            justify-content: start;
+            width: 1400px;
+            overflow-x: scroll;
+            overflow-y: hidden;
+        }
+
+        #nuevos-productos p{
+            display: block;
+            margin-bottom: 30px;
+        }
+
+        #nuevos-productos h2{
+            font-size: 4em;
+        }
+
+        #nuevos-productos h3{
+            margin-top: 0;
+        }
+
+        #nuevos-productos .carta{
+            padding: 50px;
+            background-size: 100% 150px;
+            background-repeat: no repeat;
+            background-position-y: 0;
+            background-color: rgb(50,50,50,0.5);
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+        }
+
+        #nuevos-productos .carta h3 {
+            font-size: 1.5em;
+            font-weight: 500;
+            margin-top: 125px;
+        } 
+
+        #nuevos-productos .carta button{
+            justify-content: end !important;
+        }
+
+        #vision .img-container1{
+            background-image: url("media/vision.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            border-radius: 15px;
+            width: 400px ;
+            height: 600px ;
+        }
+
+        #vision .container{
+            text-align: initial;    
+        }
+
+        #footer .container{
+            justify-content: flex-end;
+        }
+
+        #productos img{
+            width: 100%;
+            object-fit: cover;
+        }
+        #productos{
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 10px;
+        }
+        
+        #contacto {
+            background-color: #f2f2f2;
+            padding: 40px 200px;
+          }
+          
+          #contacto h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+          }
+          
+          #contacto p {
+            font-size: 18px;
+            margin-bottom: 40px;
+          }
+          
+          #contacto form {
+            display: flex;
+            flex-direction: column;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+          }
+          
+          #contacto label {
+            font-weight: bold;
+            margin-bottom: 10px;
+          }
+          
+          #contacto input[type="text"],
+          #contacto input[type="email"],
+          #contacto textarea {
+            padding: 10px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+          }
+          
+          #contacto button[type="submit"] {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+          }
+          
+          #contacto button[type="submit"]:hover {
+            background-color: #0062cc;
+          }
+
+          #registro form {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+          }
+          
+          #registro h2 {
+            text-align: center;
+          }
+          
+          #registro label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+          }
+          
+          #registro input[type="text"],
+          #registro input[type="email"],
+          #registro input[type="password"] {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+          }
+          
+          #registro button[type="submit"] {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+          }
+          
+          #registro button[type="submit"]:hover {
+            background-color: #0062cc;
+          }
+
+        /* width */
+        ::-webkit-scrollbar {
+            width: 15px;
+        }
+        
+        /* Track */
+        ::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 5px grey; 
+        }
+        
+        .productos::-webkit-scrollbar-track {
+            background-color:  white; 
+            border-radius: 10px;
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: rgb(30, 28, 28); 
+            border-radius: 5px;
+        }
+        
+        .productos::-webkit-scrollbar-thumb {
+            background: rgb(80, 12, 12); 
+            border-radius: 10px;
+        }
+    }
+  cuenta.css: |
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgb(109, 106, 106);
+        background-image: linear-gradient(
+              0deg,
+              rgba(0,0,0,0.5),
+              rgba(0,0,0,0.5)
+          )
+          ,url("1.jpeg");
+          background-repeat: no-repeat;
+          background-size: cover;
+          background-position: center center;
+    }
+
+    .container .title{
+        font-size: 25px;
+        font-weight: 500;
+        position: relative;
+      }
+    .container .title::before{
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        height: 3px;
+        width: 30px;
+        border-radius: 5px;
+        background: linear-gradient(135deg, #71b7e6, #9b59b6);
+      }
+
+    .container {
+      position: relative;
+      max-width: 370px;
+      width: 100%;
+      padding: 25px;
+      border-radius: 8px;
+      background-color: #fff;
+    }
+    .container header {
+      font-size: 22px;
+      font-weight: 600;
+      color: #333;
+    }
+    .container form {
+      margin-top: 30px;
+    }
+    form .field {
+      margin-bottom: 20px;
+    }
+    form .input-field {
+      position: relative;
+      height: 55px;
+      width: 100%;
+    }
+    .input-field input {
+      height: 100%;
+      width: 100%;
+      outline: none;
+      border: none;
+      border-radius: 8px;
+      padding: 0 15px;
+      border: 1px solid #d1d1d1;
+    }
+    .invalid input {
+      border-color: #d93025;
+    }
+    .input-field .show-hide {
+      position: absolute;
+      right: 13px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 18px;
+      color: #919191;
+      cursor: pointer;
+      padding: 3px;
+    }
+    .field .error {
+      display: flex;
+      align-items: center;
+      margin-top: 6px;
+      color: #d93025;
+      font-size: 13px;
+      display: none;
+    }
+    .invalid .error {
+      display: flex;
+    }
+    .error .error-icon {
+      margin-right: 6px;
+      font-size: 15px;
+    }
+    .create-password .error {
+      align-items: flex-start;
+    }
+    .create-password .error-icon {
+      margin-top: 4px;
+    }
+    .button {
+      margin: 25px 0 6px;
+    }
+    .button input {
+      color: white;
+      background: linear-gradient(135deg, #71b7e6, #9b59b6);
+      font-size: 16px;
+      font-weight: 400;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .button input:hover {
+      background: linear-gradient(-135deg, #333399, #ff00cc);
+    }
+
+    #volver-btn {
+      display: inline-block;
+      padding: 5px 20px;
+      background: linear-gradient(-135deg, #333399, #ff00cc);
+      color: #fff;
+      text-decoration: none;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    #volver-btn:hover{
+      background: linear-gradient(135deg, #71b7e6, #9b59b6);
+    }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tamariareweb-test
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+  selector:
+    app: tamariareweb-test
